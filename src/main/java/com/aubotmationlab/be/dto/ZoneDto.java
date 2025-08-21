@@ -31,12 +31,10 @@ public class ZoneDto {
     @Positive(message = "Height must be positive")
     private Double height;
 
-    @NotBlank(message = "Zone name is required")
     private String name;
 
     private String description;
 
-    @NotBlank(message = "Color is required")
     private String color;
 
     // 인스턴싱을 위한 색상 그룹 식별자

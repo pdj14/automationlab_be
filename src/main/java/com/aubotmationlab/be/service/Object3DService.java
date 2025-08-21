@@ -80,6 +80,26 @@ public class Object3DService {
         return convertToDto(savedObject);
     }
 
+    public List<Object3DDto> createObjects(List<Object3DDto> object3DDtos) {
+        // Check for duplicate names
+        for (Object3DDto dto : object3DDtos) {
+            if (object3DRepository.existsByName(dto.getName())) {
+                throw new IllegalArgumentException("Object with name '" + dto.getName() + "' already exists");
+            }
+        }
+
+        List<Object3D> objects = object3DDtos.stream()
+                .map(this::convertToEntity)
+                .collect(Collectors.toList());
+        
+        List<Object3D> savedObjects = object3DRepository.saveAll(objects);
+        log.info("Created {} new 3D objects", savedObjects.size());
+        
+        return savedObjects.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     public Optional<Object3DDto> updateObject(String id, Object3DDto object3DDto) {
         return object3DRepository.findById(id)
                 .map(existingObject -> {

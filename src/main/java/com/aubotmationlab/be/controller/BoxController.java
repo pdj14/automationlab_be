@@ -63,9 +63,23 @@ public class BoxController {
             @ApiResponse(responseCode = "400", description = "Invalid input data")
     })
     public ResponseEntity<Box> createBox(
-            @Parameter(description = "Box data to create") @Valid @RequestBody BoxDto boxDto) {
+            @Parameter(description = "Box data to create") @RequestBody BoxDto boxDto) {
         Box createdBox = boxService.createBox(boxDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBox);
+    }
+
+    @PostMapping("/bulk")
+    @Operation(summary = "Create multiple boxes", description = "Create multiple 3D boxes with optimized instancing support")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Boxes created successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Box.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input data")
+    })
+    public ResponseEntity<List<Box>> createBoxes(
+            @Parameter(description = "List of box data to create") @RequestBody List<BoxDto> boxDtos) {
+        List<Box> createdBoxes = boxService.createBoxes(boxDtos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdBoxes);
     }
 
     @PutMapping("/{id}")
@@ -79,7 +93,7 @@ public class BoxController {
     })
     public ResponseEntity<Box> updateBox(
             @Parameter(description = "ID of the box to update") @PathVariable String id,
-            @Parameter(description = "Updated box data") @Valid @RequestBody BoxDto boxDto) {
+            @Parameter(description = "Updated box data") @RequestBody BoxDto boxDto) {
         Optional<Box> updatedBox = boxService.updateBox(id, boxDto);
         return updatedBox.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

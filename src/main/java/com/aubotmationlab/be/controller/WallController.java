@@ -33,13 +33,19 @@ public class WallController {
     }
 
     @PostMapping
-    public ResponseEntity<Wall> createWall(@Valid @RequestBody WallDto wallDto) {
+    public ResponseEntity<Wall> createWall(@RequestBody WallDto wallDto) {
         Wall createdWall = wallService.createWall(wallDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWall);
     }
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Wall>> createWalls(@RequestBody List<WallDto> wallDtos) {
+        List<Wall> createdWalls = wallService.createWalls(wallDtos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdWalls);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Wall> updateWall(@PathVariable String id, @Valid @RequestBody WallDto wallDto) {
+    public ResponseEntity<Wall> updateWall(@PathVariable String id, @RequestBody WallDto wallDto) {
         Optional<Wall> updatedWall = wallService.updateWall(id, wallDto);
         return updatedWall.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

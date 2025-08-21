@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,19 @@ public class WallService {
                 .isGlass(wallDto.getIsGlass())
                 .build();
         return wallRepository.save(wall);
+    }
+
+    public List<Wall> createWalls(List<WallDto> wallDtos) {
+        List<Wall> walls = wallDtos.stream()
+                .map(wallDto -> Wall.builder()
+                        .startX(wallDto.getStartX())
+                        .startY(wallDto.getStartY())
+                        .endX(wallDto.getEndX())
+                        .endY(wallDto.getEndY())
+                        .isGlass(wallDto.getIsGlass())
+                        .build())
+                .collect(Collectors.toList());
+        return wallRepository.saveAll(walls);
     }
 
     public Optional<Wall> updateWall(String id, WallDto wallDto) {

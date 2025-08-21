@@ -84,7 +84,7 @@ public class Object3DController {
     }
 
     @PostMapping
-    public ResponseEntity<Object3DDto> createObject(@Valid @RequestBody Object3DDto object3DDto) {
+    public ResponseEntity<Object3DDto> createObject(@RequestBody Object3DDto object3DDto) {
         try {
             Object3DDto createdObject = object3DService.createObject(object3DDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdObject);
@@ -94,9 +94,20 @@ public class Object3DController {
         }
     }
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Object3DDto>> createObjects(@RequestBody List<Object3DDto> object3DDtos) {
+        try {
+            List<Object3DDto> createdObjects = object3DService.createObjects(object3DDtos);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdObjects);
+        } catch (IllegalArgumentException e) {
+            log.error("Error creating objects: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object3DDto> updateObject(@PathVariable String id, 
-                                                  @Valid @RequestBody Object3DDto object3DDto) {
+                                                  @RequestBody Object3DDto object3DDto) {
         try {
             Optional<Object3DDto> updatedObject = object3DService.updateObject(id, object3DDto);
             return updatedObject.map(ResponseEntity::ok)

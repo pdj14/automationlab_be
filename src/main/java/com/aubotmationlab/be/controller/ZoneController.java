@@ -34,13 +34,19 @@ public class ZoneController {
     }
 
     @PostMapping
-    public ResponseEntity<Zone> createZone(@Valid @RequestBody ZoneDto zoneDto) {
+    public ResponseEntity<Zone> createZone(@RequestBody ZoneDto zoneDto) {
         Zone createdZone = zoneService.createZone(zoneDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdZone);
     }
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Zone>> createZones(@RequestBody List<ZoneDto> zoneDtos) {
+        List<Zone> createdZones = zoneService.createZones(zoneDtos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdZones);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Zone> updateZone(@PathVariable String id, @Valid @RequestBody ZoneDto zoneDto) {
+    public ResponseEntity<Zone> updateZone(@PathVariable String id, @RequestBody ZoneDto zoneDto) {
         Optional<Zone> updatedZone = zoneService.updateZone(id, zoneDto);
         return updatedZone.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

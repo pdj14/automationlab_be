@@ -38,6 +38,21 @@ public class ZoneService {
         return zoneRepository.save(zone);
     }
 
+    public List<Zone> createZones(List<ZoneDto> zoneDtos) {
+        List<Zone> zones = zoneDtos.stream()
+                .map(zoneDto -> Zone.builder()
+                        .x(zoneDto.getX())
+                        .y(zoneDto.getY())
+                        .width(zoneDto.getWidth())
+                        .height(zoneDto.getHeight())
+                        .name(zoneDto.getName())
+                        .description(zoneDto.getDescription())
+                        .color(zoneDto.getColor())
+                        .build())
+                .collect(Collectors.toList());
+        return zoneRepository.saveAll(zones);
+    }
+
     public Optional<Zone> updateZone(String id, ZoneDto zoneDto) {
         return zoneRepository.findById(id)
                 .map(existingZone -> {

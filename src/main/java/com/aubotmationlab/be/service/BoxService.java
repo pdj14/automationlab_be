@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,20 @@ public class BoxService {
                 .color(boxDto.getColor())
                 .build();
         return boxRepository.save(box);
+    }
+
+    public List<Box> createBoxes(List<BoxDto> boxDtos) {
+        List<Box> boxes = boxDtos.stream()
+                .map(boxDto -> Box.builder()
+                        .x(boxDto.getX())
+                        .y(boxDto.getY())
+                        .widthScale(boxDto.getWidthScale())
+                        .heightScale(boxDto.getHeightScale())
+                        .depthScale(boxDto.getDepthScale())
+                        .color(boxDto.getColor())
+                        .build())
+                .collect(Collectors.toList());
+        return boxRepository.saveAll(boxes);
     }
 
     public Optional<Box> updateBox(String id, BoxDto boxDto) {
