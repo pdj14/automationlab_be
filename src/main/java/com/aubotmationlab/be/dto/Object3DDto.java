@@ -52,6 +52,12 @@ public class Object3DDto {
     @DecimalMax(value = "360.0", message = "Rotation must be between 0 and 360")
     private Double rotation;
 
+    @NotNull(message = "X coordinate is required")
+    private Double x;
+
+    @NotNull(message = "Y coordinate is required")
+    private Double y;
+
     private String color;
 
     private Boolean instancingEnabled;
