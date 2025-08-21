@@ -34,3 +34,20 @@ management:
   endpoint:
     health:
       show-details: always
+
+# SpringDoc OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  info:
+    title: Aubotmation Lab Backend API
+    description: Backend service for Aubotmation Lab with MongoDB
+    version: 1.0.0
+    contact:
+      name: Aubotmation Lab Team
+      email: support@aubotmationlab.com
+  packages-to-scan: com.aubotmationlab.be.controller
