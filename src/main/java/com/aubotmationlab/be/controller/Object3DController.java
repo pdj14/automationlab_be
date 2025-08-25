@@ -1,8 +1,11 @@
 package com.aubotmationlab.be.controller;
 
 import com.aubotmationlab.be.dto.Object3DDto;
+import com.aubotmationlab.be.dto.Object3DTemplateDto;
 import com.aubotmationlab.be.model.Object3D.Category;
+import com.aubotmationlab.be.model.Object3DTemplate;
 import com.aubotmationlab.be.service.Object3DService;
+import com.aubotmationlab.be.service.Object3DTemplateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class Object3DController {
 
     private final Object3DService object3DService;
+    private final Object3DTemplateService object3DTemplateService;
 
     @GetMapping
     public ResponseEntity<List<Object3DDto>> getAllObjects() {
@@ -127,5 +131,54 @@ public class Object3DController {
     @GetMapping("/categories")
     public ResponseEntity<Category[]> getAvailableCategories() {
         return ResponseEntity.ok(Category.values());
+    }
+
+    @PostMapping("/from-template/{templateId}")
+    public ResponseEntity<Object3DDto> createObjectFromTemplate(
+            @PathVariable String templateId,
+            @RequestBody Object3DDto object3DDto) {
+        try {
+            // Get template information
+            Object3DTemplateDto template = object3DTemplateService.getTemplateById(templateId);
+            
+            // Merge template data with provided object data
+            Object3DDto mergedObject = Object3DDto.builder()
+                    .name(object3DDto.getName() != null ? object3DDto.getName() : template.getName())
+                    .category(object3DDto.getCategory() != null ? object3DDto.getCategory() : convertCategory(template.getCategory()))
+                    .description(object3DDto.getDescription() != null ? object3DDto.getDescription() : template.getDescription())
+                    .glbFile(template.getGlbFile())
+                    .thumbnailFile(template.getThumbnailFile())
+                    .lodFile(template.getLodFile())
+                    .width(template.getWidth())
+                    .depth(template.getDepth())
+                    .height(template.getHeight())
+                    .color(object3DDto.getColor() != null ? object3DDto.getColor() : template.getColor())
+                    .instancingEnabled(object3DDto.getInstancingEnabled() != null ? object3DDto.getInstancingEnabled() : template.getInstancingEnabled())
+                    .x(object3DDto.getX())
+                    .y(object3DDto.getY())
+                    .rotation(object3DDto.getRotation())
+                    .build();
+            
+            Object3DDto createdObject = object3DService.createObject(mergedObject);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdObject);
+        } catch (Exception e) {
+            log.error("Error creating object from template: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    private Category convertCategory(Object3DTemplate.Category templateCategory) {
+        switch (templateCategory) {
+            case ROBOT:
+                return Category.ROBOT;
+            case EQUIPMENT:
+                return Category.EQUIPMENT;
+            case APPLIANCES:
+                return Category.APPLIANCES;
+            case AV:
+                return Category.AV;
+            default:
+                return Category.EQUIPMENT; // Default fallback
+        }
     }
 }
