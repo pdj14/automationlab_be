@@ -19,9 +19,9 @@ public class Box {
 
     private Double x;
     private Double y;
-    private Double widthScale;
-    private Double heightScale;
-    private Double depthScale;
+    private Double width;
+    private Double height;
+    private Double depth;
     private String color;
 }
 

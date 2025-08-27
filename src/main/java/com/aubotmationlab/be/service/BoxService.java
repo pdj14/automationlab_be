@@ -28,9 +28,9 @@ public class BoxService {
         Box box = Box.builder()
                 .x(boxDto.getX())
                 .y(boxDto.getY())
-                .widthScale(boxDto.getWidthScale())
-                .heightScale(boxDto.getHeightScale())
-                .depthScale(boxDto.getDepthScale())
+                .width(boxDto.getWidth())
+                .height(boxDto.getHeight())
+                .depth(boxDto.getDepth())
                 .color(boxDto.getColor())
                 .build();
         return boxRepository.save(box);
@@ -41,9 +41,9 @@ public class BoxService {
                 .map(boxDto -> Box.builder()
                         .x(boxDto.getX())
                         .y(boxDto.getY())
-                        .widthScale(boxDto.getWidthScale())
-                        .heightScale(boxDto.getHeightScale())
-                        .depthScale(boxDto.getDepthScale())
+                        .width(boxDto.getWidth())
+                        .height(boxDto.getHeight())
+                        .depth(boxDto.getDepth())
                         .color(boxDto.getColor())
                         .build())
                 .collect(Collectors.toList());
@@ -55,9 +55,9 @@ public class BoxService {
                 .map(existingBox -> {
                     existingBox.setX(boxDto.getX());
                     existingBox.setY(boxDto.getY());
-                    existingBox.setWidthScale(boxDto.getWidthScale());
-                    existingBox.setHeightScale(boxDto.getHeightScale());
-                    existingBox.setDepthScale(boxDto.getDepthScale());
+                    existingBox.setWidth(boxDto.getWidth());
+                    existingBox.setHeight(boxDto.getHeight());
+                    existingBox.setDepth(boxDto.getDepth());
                     existingBox.setColor(boxDto.getColor());
                     return boxRepository.save(existingBox);
                 });
