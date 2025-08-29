@@ -28,7 +28,6 @@ public class Object3DDto {
 
     private String description;
 
-    @NotBlank(message = "GLB file path is required")
     private String glbFile;
 
     private String thumbnailFile;

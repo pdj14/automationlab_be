@@ -63,6 +63,7 @@ public class Object3D {
     private Boolean instancingEnabled = false;
 
     public enum Category {
+        RACK,
         ROBOT,
         EQUIPMENT,
         APPLIANCES,
