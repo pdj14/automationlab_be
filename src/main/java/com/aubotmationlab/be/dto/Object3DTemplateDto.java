@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.aubotmationlab.be.model.Object3DTemplate.Category;
+import com.aubotmationlab.be.validation.UniqueTemplateName;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +21,7 @@ public class Object3DTemplateDto {
     private String id;
 
     @NotBlank(message = "Template name is required")
+    @UniqueTemplateName(message = "Template name must be unique")
     private String name;
 
     @NotNull(message = "Category is required")
@@ -26,12 +29,15 @@ public class Object3DTemplateDto {
 
     private String description;
 
-    @NotBlank(message = "GLB file path is required")
-    private String glbFile;
+    // 파일 업로드용 필드들 (MultipartFile)
+    private MultipartFile glbFile;
+    private MultipartFile thumbnailFile;
+    private MultipartFile lodFile;
 
-    private String thumbnailFile;
-
-    private String lodFile;
+    // 파일 경로 필드들 (String) - DB에서 조회 시 사용
+    private String glbFilePath;
+    private String thumbnailFilePath;
+    private String lodFilePath;
 
     @NotNull(message = "Width is required")
     @Positive(message = "Width must be positive")

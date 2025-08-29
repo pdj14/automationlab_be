@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.index.Indexed;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.DecimalMin;
@@ -24,21 +22,13 @@ public class Object3D {
     @Id
     private String id;
 
-    @NotBlank(message = "Object name is required")
-    @Indexed
+    @NotNull(message = "Name is required")
     private String name;
 
     @NotNull(message = "Category is required")
     private Category category;
 
     private String description;
-
-    @NotBlank(message = "GLB file path is required")
-    private String glbFile;
-
-    private String thumbnailFile;
-
-    private String lodFile;
 
     @NotNull(message = "Width is required")
     @Positive(message = "Width must be positive")
@@ -57,10 +47,16 @@ public class Object3D {
     @DecimalMax(value = "360.0", message = "Rotation must be between 0 and 360")
     private Double rotation;
 
+    @NotNull(message = "X coordinate is required")
+    private Double x;
+
+    @NotNull(message = "Y coordinate is required")
+    private Double y;
+
     private String color;
 
-    @Builder.Default
-    private Boolean instancingEnabled = false;
+    // 템플릿 참조 필드
+    private String templateName;
 
     public enum Category {
         RACK,

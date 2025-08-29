@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.aubotmationlab.be.model.Object3D.Category;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.DecimalMin;
@@ -20,19 +19,13 @@ public class Object3DDto {
 
     private String id;
 
-    @NotBlank(message = "Object name is required")
+    @NotNull(message = "Name is required")
     private String name;
 
     @NotNull(message = "Category is required")
     private Category category;
 
     private String description;
-
-    private String glbFile;
-
-    private String thumbnailFile;
-
-    private String lodFile;
 
     @NotNull(message = "Width is required")
     @Positive(message = "Width must be positive")
@@ -59,5 +52,6 @@ public class Object3DDto {
 
     private String color;
 
-    private Boolean instancingEnabled;
+    // 템플릿 참조 필드
+    private String templateName;
 }

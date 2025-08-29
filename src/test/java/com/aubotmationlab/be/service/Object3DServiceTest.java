@@ -37,13 +37,14 @@ class Object3DServiceTest {
                 .name("Test Robot")
                 .category(Category.ROBOT)
                 .description("A test robot")
-                .glbFile("/models/test-robot.glb")
                 .width(1.0)
                 .depth(1.0)
                 .height(2.0)
                 .rotation(0.0)
+                .x(0.0)
+                .y(0.0)
                 .color("#FF0000")
-                .instancingEnabled(true)
+                .templateName("test-template")
                 .build();
 
         testObject = Object3D.builder()
@@ -51,13 +52,14 @@ class Object3DServiceTest {
                 .name("Test Robot")
                 .category(Category.ROBOT)
                 .description("A test robot")
-                .glbFile("/models/test-robot.glb")
                 .width(1.0)
                 .depth(1.0)
                 .height(2.0)
                 .rotation(0.0)
+                .x(0.0)
+                .y(0.0)
                 .color("#FF0000")
-                .instancingEnabled(true)
+                .templateName("test-template")
                 .build();
     }
 
@@ -138,11 +140,12 @@ class Object3DServiceTest {
         Object3DDto updateDto = Object3DDto.builder()
                 .name("Updated Robot")
                 .category(Category.ROBOT)
-                .glbFile("/models/updated-robot.glb")
                 .width(2.0)
                 .depth(2.0)
                 .height(3.0)
                 .rotation(90.0)
+                .x(10.0)
+                .y(10.0)
                 .build();
 
         when(object3DRepository.findById("test-id")).thenReturn(Optional.of(testObject));

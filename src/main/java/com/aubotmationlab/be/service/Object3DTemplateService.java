@@ -6,6 +6,8 @@ import com.aubotmationlab.be.repository.Object3DTemplateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class Object3DTemplateService {
 
     private final Object3DTemplateRepository object3DTemplateRepository;
+    private final FileStorageService fileStorageService;
 
     public List<Object3DTemplateDto> getAllTemplates() {
         return object3DTemplateRepository.findAll()
@@ -49,15 +52,80 @@ public class Object3DTemplateService {
         return convertToDto(template);
     }
 
+    public Object3DTemplateDto getTemplateByName(String name) {
+        Object3DTemplate template = object3DTemplateRepository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("Template not found with name: " + name));
+        return convertToDto(template);
+    }
+
     public Object3DTemplateDto createTemplate(Object3DTemplateDto templateDto) {
+        // 이름 중복 검증
+        if (object3DTemplateRepository.existsByName(templateDto.getName())) {
+            throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
+        }
+        
         Object3DTemplate template = convertToEntity(templateDto);
         Object3DTemplate savedTemplate = object3DTemplateRepository.save(template);
         return convertToDto(savedTemplate);
     }
 
+    public Object3DTemplateDto createTemplateWithFiles(Object3DTemplateDto templateDto) {
+        try {
+            // 이름 중복 검증
+            if (object3DTemplateRepository.existsByName(templateDto.getName())) {
+                throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
+            }
+            
+            String glbFilePath = null;
+            String thumbnailFilePath = null;
+            String lodFilePath = null;
+
+            // GLB 파일 저장
+            if (templateDto.getGlbFile() != null && !templateDto.getGlbFile().isEmpty()) {
+                glbFilePath = fileStorageService.storeFile(templateDto.getGlbFile(), fileStorageService.getGlbDirectory());
+            }
+
+            // 썸네일 파일 저장
+            if (templateDto.getThumbnailFile() != null && !templateDto.getThumbnailFile().isEmpty()) {
+                thumbnailFilePath = fileStorageService.storeFile(templateDto.getThumbnailFile(), fileStorageService.getThumbnailDirectory());
+            }
+
+            // LOD 파일 저장
+            if (templateDto.getLodFile() != null && !templateDto.getLodFile().isEmpty()) {
+                lodFilePath = fileStorageService.storeFile(templateDto.getLodFile(), fileStorageService.getLodDirectory());
+            }
+
+            // 템플릿 생성
+            Object3DTemplate template = Object3DTemplate.builder()
+                    .name(templateDto.getName())
+                    .category(templateDto.getCategory())
+                    .description(templateDto.getDescription())
+                    .glbFile(glbFilePath)
+                    .thumbnailFile(thumbnailFilePath)
+                    .lodFile(lodFilePath)
+                    .width(templateDto.getWidth())
+                    .depth(templateDto.getDepth())
+                    .height(templateDto.getHeight())
+                    .color(templateDto.getColor())
+                    .instancingEnabled(templateDto.getInstancingEnabled())
+                    .build();
+
+            Object3DTemplate savedTemplate = object3DTemplateRepository.save(template);
+            return convertToDto(savedTemplate);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file: " + e.getMessage(), e);
+        }
+    }
+
     public Object3DTemplateDto updateTemplate(String id, Object3DTemplateDto templateDto) {
-        if (!object3DTemplateRepository.existsById(id)) {
-            throw new RuntimeException("Template not found with id: " + id);
+        Object3DTemplate existingTemplate = object3DTemplateRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
+        
+        // 이름이 변경되는 경우 중복 검증
+        if (!existingTemplate.getName().equals(templateDto.getName()) && 
+            object3DTemplateRepository.existsByName(templateDto.getName())) {
+            throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
         }
         
         Object3DTemplate template = convertToEntity(templateDto);
@@ -79,9 +147,12 @@ public class Object3DTemplateService {
                 .name(template.getName())
                 .category(template.getCategory())
                 .description(template.getDescription())
-                .glbFile(template.getGlbFile())
-                .thumbnailFile(template.getThumbnailFile())
-                .lodFile(template.getLodFile())
+                .glbFile(null) // MultipartFile은 null로 설정
+                .thumbnailFile(null)
+                .lodFile(null)
+                .glbFilePath(template.getGlbFile()) // 파일 경로는 String으로 설정
+                .thumbnailFilePath(template.getThumbnailFile())
+                .lodFilePath(template.getLodFile())
                 .width(template.getWidth())
                 .depth(template.getDepth())
                 .height(template.getHeight())
@@ -95,14 +166,18 @@ public class Object3DTemplateService {
                 .name(dto.getName())
                 .category(dto.getCategory())
                 .description(dto.getDescription())
-                .glbFile(dto.getGlbFile())
-                .thumbnailFile(dto.getThumbnailFile())
-                .lodFile(dto.getLodFile())
+                .glbFile(dto.getGlbFilePath()) // 파일 경로 사용
+                .thumbnailFile(dto.getThumbnailFilePath())
+                .lodFile(dto.getLodFilePath())
                 .width(dto.getWidth())
                 .depth(dto.getDepth())
                 .height(dto.getHeight())
                 .color(dto.getColor())
                 .instancingEnabled(dto.getInstancingEnabled())
                 .build();
+    }
+
+    public Path getFilePath(String filePath) {
+        return fileStorageService.getFilePath(filePath);
     }
 }

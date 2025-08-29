@@ -6,13 +6,23 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: aubotmationlab
-      auto-index-creation: true
+      database: aubotmationlab_dev
+      auto-index-creation: false
   
   jackson:
     default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
+  
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+# File upload configuration
+file:
+  upload-dir: objectTemplate
 
 server:
   port: 8080

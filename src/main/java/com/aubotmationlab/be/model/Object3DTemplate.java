@@ -23,7 +23,7 @@ public class Object3DTemplate {
     private String id;
 
     @NotBlank(message = "Template name is required")
-    @Indexed
+    @Indexed(unique = true)
     private String name;
 
     @NotNull(message = "Category is required")
@@ -31,7 +31,6 @@ public class Object3DTemplate {
 
     private String description;
 
-    @NotBlank(message = "GLB file path is required")
     private String glbFile;
 
     private String thumbnailFile;
@@ -53,7 +52,7 @@ public class Object3DTemplate {
     private String color;
 
     @Builder.Default
-    private Boolean instancingEnabled = false;
+    private Boolean instancingEnabled = true;
 
     public enum Category {
         ROBOT,
