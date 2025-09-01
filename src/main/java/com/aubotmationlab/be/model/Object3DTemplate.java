@@ -58,6 +58,7 @@ public class Object3DTemplate {
         ROBOT,
         EQUIPMENT,
         APPLIANCES,
-        AV
+        AV,
+        RACK
     }
 }
