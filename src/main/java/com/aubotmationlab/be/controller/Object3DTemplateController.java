@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/object3d-templates")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowCredentials = "false")
 public class Object3DTemplateController {
 
     private final Object3DTemplateService object3DTemplateService;

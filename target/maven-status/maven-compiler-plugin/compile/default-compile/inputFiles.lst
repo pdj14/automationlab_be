@@ -1,10 +1,12 @@
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\exception\ErrorResponse.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\model\Box.java
+C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\service\FileStorageService.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\config\OpenApiConfig.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\service\WallService.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\model\Wall.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\service\ZoneService.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\controller\BoxController.java
+C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\validation\UniqueTemplateNameValidator.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\dto\BoxDto.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\AubotmationLabBeApplication.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\controller\WallController.java
@@ -26,5 +28,6 @@ C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\service\BoxSe
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\model\Object3DTemplate.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\controller\Object3DController.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\repository\Object3DRepository.java
+C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\validation\UniqueTemplateName.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\dto\WallDto.java
 C:\workspace\aubotmationlab_be\src\main\java\com\aubotmationlab\be\exception\GlobalExceptionHandler.java

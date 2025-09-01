@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/objects")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowCredentials = "false")
 public class Object3DController {
 
     private final Object3DService object3DService;
