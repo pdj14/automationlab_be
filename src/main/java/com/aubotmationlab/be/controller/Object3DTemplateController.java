@@ -14,8 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/object3d-templates")
@@ -165,6 +169,216 @@ public class Object3DTemplateController {
                 return ResponseEntity.notFound().build();
             }
         } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/{id}/with-files")
+    public ResponseEntity<Map<String, Object>> getTemplateWithFiles(@PathVariable String id) {
+        try {
+            Object3DTemplateDto template = object3DTemplateService.getTemplateById(id);
+            Map<String, Object> response = new HashMap<>();
+            
+            // 템플릿 기본 정보
+            response.put("id", template.getId());
+            response.put("name", template.getName());
+            response.put("category", template.getCategory());
+            response.put("description", template.getDescription());
+            response.put("width", template.getWidth());
+            response.put("depth", template.getDepth());
+            response.put("height", template.getHeight());
+            response.put("color", template.getColor());
+            response.put("instancingEnabled", template.getInstancingEnabled());
+            
+            // 파일들을 Base64로 인코딩하여 포함
+            Map<String, String> files = new HashMap<>();
+            
+            // GLB 파일
+            if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
+                Path glbFile = object3DTemplateService.getFilePath(template.getGlbFilePath());
+                if (Files.exists(glbFile)) {
+                    byte[] glbBytes = Files.readAllBytes(glbFile);
+                    String glbBase64 = Base64.getEncoder().encodeToString(glbBytes);
+                    files.put("glb", glbBase64);
+                }
+            }
+            
+            // 썸네일 파일
+            if (template.getThumbnailFilePath() != null && !template.getThumbnailFilePath().isEmpty()) {
+                Path thumbnailFile = object3DTemplateService.getFilePath(template.getThumbnailFilePath());
+                if (Files.exists(thumbnailFile)) {
+                    byte[] thumbnailBytes = Files.readAllBytes(thumbnailFile);
+                    String thumbnailBase64 = Base64.getEncoder().encodeToString(thumbnailBytes);
+                    files.put("thumbnail", thumbnailBase64);
+                }
+            }
+            
+            // LOD 파일
+            if (template.getLodFilePath() != null && !template.getLodFilePath().isEmpty()) {
+                Path lodFile = object3DTemplateService.getFilePath(template.getLodFilePath());
+                if (Files.exists(lodFile)) {
+                    byte[] lodBytes = Files.readAllBytes(lodFile);
+                    String lodBase64 = Base64.getEncoder().encodeToString(lodBytes);
+                    files.put("lod", lodBase64);
+                }
+            }
+            
+            response.put("files", files);
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/with-files")
+    public ResponseEntity<List<Map<String, Object>>> getAllTemplatesWithFiles() {
+        try {
+            List<Object3DTemplateDto> templates = object3DTemplateService.getAllTemplates();
+            List<Map<String, Object>> response = new java.util.ArrayList<>();
+            
+            for (Object3DTemplateDto template : templates) {
+                Map<String, Object> templateData = new HashMap<>();
+                
+                // 템플릿 기본 정보
+                templateData.put("id", template.getId());
+                templateData.put("name", template.getName());
+                templateData.put("category", template.getCategory());
+                templateData.put("description", template.getDescription());
+                templateData.put("width", template.getWidth());
+                templateData.put("depth", template.getDepth());
+                templateData.put("height", template.getHeight());
+                templateData.put("color", template.getColor());
+                templateData.put("instancingEnabled", template.getInstancingEnabled());
+                
+                // 파일들을 Base64로 인코딩하여 포함
+                Map<String, String> files = new HashMap<>();
+                
+                // GLB 파일
+                if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
+                    Path glbFile = object3DTemplateService.getFilePath(template.getGlbFilePath());
+                    if (Files.exists(glbFile)) {
+                        byte[] glbBytes = Files.readAllBytes(glbFile);
+                        String glbBase64 = Base64.getEncoder().encodeToString(glbBytes);
+                        files.put("glb", glbBase64);
+                    }
+                }
+                
+                // 썸네일 파일
+                if (template.getThumbnailFilePath() != null && !template.getThumbnailFilePath().isEmpty()) {
+                    Path thumbnailFile = object3DTemplateService.getFilePath(template.getThumbnailFilePath());
+                    if (Files.exists(thumbnailFile)) {
+                        byte[] thumbnailBytes = Files.readAllBytes(thumbnailFile);
+                        String thumbnailBase64 = Base64.getEncoder().encodeToString(thumbnailBytes);
+                        files.put("thumbnail", thumbnailBase64);
+                    }
+                }
+                
+                // LOD 파일
+                if (template.getLodFilePath() != null && !template.getLodFilePath().isEmpty()) {
+                    Path lodFile = object3DTemplateService.getFilePath(template.getLodFilePath());
+                    if (Files.exists(lodFile)) {
+                        byte[] lodBytes = Files.readAllBytes(lodFile);
+                        String lodBase64 = Base64.getEncoder().encodeToString(lodBytes);
+                        files.put("lod", lodBase64);
+                    }
+                }
+                
+                templateData.put("files", files);
+                response.add(templateData);
+            }
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/{id}/with-urls")
+    public ResponseEntity<Map<String, Object>> getTemplateWithUrls(@PathVariable String id) {
+        try {
+            Object3DTemplateDto template = object3DTemplateService.getTemplateById(id);
+            Map<String, Object> response = new HashMap<>();
+            
+            // 템플릿 기본 정보
+            response.put("id", template.getId());
+            response.put("name", template.getName());
+            response.put("category", template.getCategory());
+            response.put("description", template.getDescription());
+            response.put("width", template.getWidth());
+            response.put("depth", template.getDepth());
+            response.put("height", template.getHeight());
+            response.put("color", template.getColor());
+            response.put("instancingEnabled", template.getInstancingEnabled());
+            
+            // 파일 다운로드 URL들
+            Map<String, String> fileUrls = new HashMap<>();
+            
+            if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
+                fileUrls.put("glb", "/api/object3d-templates/" + id + "/files/glb");
+            }
+            
+            if (template.getThumbnailFilePath() != null && !template.getThumbnailFilePath().isEmpty()) {
+                fileUrls.put("thumbnail", "/api/object3d-templates/" + id + "/files/thumbnail");
+            }
+            
+            if (template.getLodFilePath() != null && !template.getLodFilePath().isEmpty()) {
+                fileUrls.put("lod", "/api/object3d-templates/" + id + "/files/lod");
+            }
+            
+            response.put("fileUrls", fileUrls);
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/with-urls")
+    public ResponseEntity<List<Map<String, Object>>> getAllTemplatesWithUrls() {
+        try {
+            List<Object3DTemplateDto> templates = object3DTemplateService.getAllTemplates();
+            List<Map<String, Object>> response = new java.util.ArrayList<>();
+            
+            for (Object3DTemplateDto template : templates) {
+                Map<String, Object> templateData = new HashMap<>();
+                
+                // 템플릿 기본 정보
+                templateData.put("id", template.getId());
+                templateData.put("name", template.getName());
+                templateData.put("category", template.getCategory());
+                templateData.put("description", template.getDescription());
+                templateData.put("width", template.getWidth());
+                templateData.put("depth", template.getDepth());
+                templateData.put("height", template.getHeight());
+                templateData.put("color", template.getColor());
+                templateData.put("instancingEnabled", template.getInstancingEnabled());
+                
+                // 파일 다운로드 URL들
+                Map<String, String> fileUrls = new HashMap<>();
+                
+                if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
+                    fileUrls.put("glb", "/api/object3d-templates/" + template.getId() + "/files/glb");
+                }
+                
+                if (template.getThumbnailFilePath() != null && !template.getThumbnailFilePath().isEmpty()) {
+                    fileUrls.put("thumbnail", "/api/object3d-templates/" + template.getId() + "/files/thumbnail");
+                }
+                
+                if (template.getLodFilePath() != null && !template.getLodFilePath().isEmpty()) {
+                    fileUrls.put("lod", "/api/object3d-templates/" + template.getId() + "/files/lod");
+                }
+                
+                templateData.put("fileUrls", fileUrls);
+                response.add(templateData);
+            }
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }

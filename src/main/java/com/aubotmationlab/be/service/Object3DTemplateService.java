@@ -82,17 +82,17 @@ public class Object3DTemplateService {
 
             // GLB 파일 저장
             if (templateDto.getGlbFile() != null && !templateDto.getGlbFile().isEmpty()) {
-                glbFilePath = fileStorageService.storeFile(templateDto.getGlbFile(), fileStorageService.getGlbDirectory());
+                glbFilePath = fileStorageService.storeFile(templateDto.getGlbFile(), templateDto.getName(), "glb");
             }
 
             // 썸네일 파일 저장
             if (templateDto.getThumbnailFile() != null && !templateDto.getThumbnailFile().isEmpty()) {
-                thumbnailFilePath = fileStorageService.storeFile(templateDto.getThumbnailFile(), fileStorageService.getThumbnailDirectory());
+                thumbnailFilePath = fileStorageService.storeFile(templateDto.getThumbnailFile(), templateDto.getName(), "thumbnail");
             }
 
             // LOD 파일 저장
             if (templateDto.getLodFile() != null && !templateDto.getLodFile().isEmpty()) {
-                lodFilePath = fileStorageService.storeFile(templateDto.getLodFile(), fileStorageService.getLodDirectory());
+                lodFilePath = fileStorageService.storeFile(templateDto.getLodFile(), templateDto.getName(), "lod");
             }
 
             // 템플릿 생성
@@ -135,10 +135,19 @@ public class Object3DTemplateService {
     }
 
     public void deleteTemplate(String id) {
-        if (!object3DTemplateRepository.existsById(id)) {
-            throw new RuntimeException("Template not found with id: " + id);
+        Object3DTemplate template = object3DTemplateRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
+        
+        try {
+            // 템플릿 폴더 전체 삭제
+            fileStorageService.deleteTemplateFolder(template.getName());
+            
+            // 데이터베이스에서 템플릿 삭제
+            object3DTemplateRepository.deleteById(id);
+            
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to delete template folder: " + e.getMessage(), e);
         }
-        object3DTemplateRepository.deleteById(id);
     }
 
     private Object3DTemplateDto convertToDto(Object3DTemplate template) {

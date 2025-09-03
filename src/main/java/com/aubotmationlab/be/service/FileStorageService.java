@@ -17,7 +17,7 @@ public class FileStorageService {
     @Value("${file.upload-dir:objectTemplate}")
     public String uploadDir;
 
-    public String storeFile(MultipartFile file, String subDirectory) throws IOException {
+    public String storeFile(MultipartFile file, String templateName, String fileType) throws IOException {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File is empty");
         }
@@ -28,22 +28,27 @@ public class FileStorageService {
             throw new IllegalArgumentException("File name is empty");
         }
 
-        // 고유한 파일명 생성
+        // 템플릿 이름으로 폴더명 생성 (특수문자 제거)
+        String safeTemplateName = sanitizeFolderName(templateName);
+        
+        // 파일 확장자 가져오기
         String fileExtension = getFileExtension(originalFilename);
-        String uniqueFilename = UUID.randomUUID().toString() + fileExtension;
+        
+        // 파일명 생성 (템플릿이름_파일타입 + 확장자)
+        String filename = safeTemplateName + "_" + fileType + fileExtension;
 
-        // 디렉토리 생성
-        Path uploadPath = Paths.get(uploadDir, subDirectory);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+        // 디렉토리 생성: objectTemplate/templates/{templateName}/
+        Path templateDir = Paths.get(uploadDir, "templates", safeTemplateName);
+        if (!Files.exists(templateDir)) {
+            Files.createDirectories(templateDir);
         }
 
         // 파일 저장
-        Path targetLocation = uploadPath.resolve(uniqueFilename);
+        Path targetLocation = templateDir.resolve(filename);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-        // 상대 경로 반환 (예: templates/glb/uuid.glb)
-        return Paths.get(subDirectory, uniqueFilename).toString().replace("\\", "/");
+        // 상대 경로 반환 (예: templates/templateName/glb.glb)
+        return Paths.get("templates", safeTemplateName, filename).toString().replace("\\", "/");
     }
 
     public void deleteFile(String filePath) throws IOException {
@@ -51,6 +56,25 @@ public class FileStorageService {
             Path fullPath = Paths.get(uploadDir, filePath);
             if (Files.exists(fullPath)) {
                 Files.delete(fullPath);
+            }
+        }
+    }
+
+    public void deleteTemplateFolder(String templateName) throws IOException {
+        if (templateName != null && !templateName.isEmpty()) {
+            String safeTemplateName = sanitizeFolderName(templateName);
+            Path templateDir = Paths.get(uploadDir, "templates", safeTemplateName);
+            if (Files.exists(templateDir)) {
+                // 폴더 내 모든 파일 삭제
+                Files.walk(templateDir)
+                    .sorted((a, b) -> b.compareTo(a)) // 역순 정렬 (파일 먼저, 폴더 나중에)
+                    .forEach(path -> {
+                        try {
+                            Files.delete(path);
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to delete file: " + path, e);
+                        }
+                    });
             }
         }
     }
@@ -75,16 +99,18 @@ public class FileStorageService {
         return filename.substring(lastDotIndex);
     }
 
-    // 파일 타입별 디렉토리 반환
-    public String getGlbDirectory() {
-        return "templates/glb";
+    private String sanitizeFolderName(String templateName) {
+        if (templateName == null || templateName.isEmpty()) {
+            throw new IllegalArgumentException("Template name cannot be null or empty");
+        }
+        
+        // 특수문자 제거 및 안전한 폴더명 생성
+        return templateName
+                .replaceAll("[^a-zA-Z0-9가-힣_-]", "_") // 영문, 숫자, 한글, 언더스코어, 하이픈만 허용
+                .replaceAll("_{2,}", "_") // 연속된 언더스코어를 하나로
+                .replaceAll("^_|_$", "") // 앞뒤 언더스코어 제거
+                .toLowerCase(); // 소문자로 변환
     }
 
-    public String getThumbnailDirectory() {
-        return "templates/thumbnails";
-    }
 
-    public String getLodDirectory() {
-        return "templates/lod";
-    }
 }

@@ -1,12 +1,12 @@
 @echo off
+chcp 65001 >nul
 echo Aubotmation Lab Backend Service 실행 스크립트
 echo ================================================
 
-echo.
 echo 1. 프로젝트 빌드 중...
 call mvn clean install -DskipTests
 if %errorlevel% neq 0 (
-    echo 빌드 실패! Maven이 설치되어 있는지 확인하세요.
+    echo 빌드 실패! Java 17이 설치되어 있는지 확인하세요.
     pause
     exit /b 1
 )
