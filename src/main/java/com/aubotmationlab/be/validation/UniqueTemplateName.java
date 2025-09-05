@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.validation;
+package com.automationlab.be.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

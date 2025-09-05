@@ -3,10 +3,10 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: aubotmationlab_dev
+      database: automationlab
 
 logging:
   level:
-    com.aubotmationlab.be: DEBUG
+    com.automationlab.be: DEBUG
     org.springframework.data.mongodb: DEBUG
     org.springframework.web: DEBUG

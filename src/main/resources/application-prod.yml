@@ -3,12 +3,12 @@ spring:
     mongodb:
       host: ${MONGODB_HOST:localhost}
       port: ${MONGODB_PORT:27017}
-      database: ${MONGODB_DATABASE:aubotmationlab}
+      database: ${MONGODB_DATABASE:automationlab}
       username: ${MONGODB_USERNAME:}
       password: ${MONGODB_PASSWORD:}
 
 logging:
   level:
-    com.aubotmationlab.be: INFO
+    com.automationlab.be: INFO
     org.springframework.data.mongodb: WARN
     org.springframework.web: WARN

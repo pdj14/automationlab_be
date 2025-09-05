@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.service;
+package com.automationlab.be.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

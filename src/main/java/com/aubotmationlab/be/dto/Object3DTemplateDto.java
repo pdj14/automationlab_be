@@ -1,11 +1,11 @@
-package com.aubotmationlab.be.dto;
+package com.automationlab.be.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.aubotmationlab.be.model.Object3DTemplate.Category;
-import com.aubotmationlab.be.validation.UniqueTemplateName;
+import com.automationlab.be.model.Object3DTemplate.Category;
+import com.automationlab.be.validation.UniqueTemplateName;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;

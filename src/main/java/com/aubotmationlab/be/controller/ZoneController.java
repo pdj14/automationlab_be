@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.controller;
+package com.automationlab.be.controller;
 
-import com.aubotmationlab.be.dto.ZoneDto;
-import com.aubotmationlab.be.model.Zone;
-import com.aubotmationlab.be.service.ZoneService;
+import com.automationlab.be.dto.ZoneDto;
+import com.automationlab.be.model.Zone;
+import com.automationlab.be.service.ZoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

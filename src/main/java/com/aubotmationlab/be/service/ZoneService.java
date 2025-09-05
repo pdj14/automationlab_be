@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.service;
+package com.automationlab.be.service;
 
-import com.aubotmationlab.be.dto.ZoneDto;
-import com.aubotmationlab.be.model.Zone;
-import com.aubotmationlab.be.repository.ZoneRepository;
+import com.automationlab.be.dto.ZoneDto;
+import com.automationlab.be.model.Zone;
+import com.automationlab.be.repository.ZoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

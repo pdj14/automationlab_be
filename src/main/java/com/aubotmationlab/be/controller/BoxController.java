@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.controller;
+package com.automationlab.be.controller;
 
-import com.aubotmationlab.be.dto.BoxDto;
-import com.aubotmationlab.be.model.Box;
-import com.aubotmationlab.be.service.BoxService;
+import com.automationlab.be.dto.BoxDto;
+import com.automationlab.be.model.Box;
+import com.automationlab.be.service.BoxService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

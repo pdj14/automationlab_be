@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.service;
+package com.automationlab.be.service;
 
-import com.aubotmationlab.be.dto.Object3DTemplateDto;
-import com.aubotmationlab.be.model.Object3DTemplate;
-import com.aubotmationlab.be.repository.Object3DTemplateRepository;
+import com.automationlab.be.dto.Object3DTemplateDto;
+import com.automationlab.be.model.Object3DTemplate;
+import com.automationlab.be.repository.Object3DTemplateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

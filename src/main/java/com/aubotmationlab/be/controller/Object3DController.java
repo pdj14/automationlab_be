@@ -1,8 +1,7 @@
-package com.aubotmationlab.be.controller;
+package com.automationlab.be.controller;
 
-import com.aubotmationlab.be.dto.Object3DDto;
-import com.aubotmationlab.be.model.Object3D.Category;
-import com.aubotmationlab.be.service.Object3DService;
+import com.automationlab.be.dto.Object3DDto;
+import com.automationlab.be.service.Object3DService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,11 +35,6 @@ public class Object3DController {
 
 
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<Object3DDto>> getObjectsByCategory(@PathVariable Category category) {
-        List<Object3DDto> objects = object3DService.getObjectsByCategory(category);
-        return ResponseEntity.ok(objects);
-    }
 
     @GetMapping("/template/{templateName}")
     public ResponseEntity<List<Object3DDto>> getObjectsByTemplateName(@PathVariable String templateName) {
@@ -48,27 +42,6 @@ public class Object3DController {
         return ResponseEntity.ok(objects);
     }
 
-    @GetMapping("/dimensions")
-    public ResponseEntity<List<Object3DDto>> getObjectsByDimensionsRange(
-            @RequestParam(required = false) Double minWidth,
-            @RequestParam(required = false) Double maxWidth,
-            @RequestParam(required = false) Double minHeight,
-            @RequestParam(required = false) Double maxHeight,
-            @RequestParam(required = false) Double minDepth,
-            @RequestParam(required = false) Double maxDepth) {
-        
-        // Set default values if parameters are null
-        minWidth = minWidth != null ? minWidth : 0.0;
-        maxWidth = maxWidth != null ? maxWidth : Double.MAX_VALUE;
-        minHeight = minHeight != null ? minHeight : 0.0;
-        maxHeight = maxHeight != null ? maxHeight : Double.MAX_VALUE;
-        minDepth = minDepth != null ? minDepth : 0.0;
-        maxDepth = maxDepth != null ? maxDepth : Double.MAX_VALUE;
-
-        List<Object3DDto> objects = object3DService.getObjectsByDimensionsRange(
-                minWidth, maxWidth, minHeight, maxHeight, minDepth, maxDepth);
-        return ResponseEntity.ok(objects);
-    }
 
 
 
@@ -113,10 +86,6 @@ public class Object3DController {
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/categories")
-    public ResponseEntity<Category[]> getAvailableCategories() {
-        return ResponseEntity.ok(Category.values());
-    }
 
     @PostMapping("/from-template/{templateName}")
     public ResponseEntity<Object3DDto> createObjectFromTemplate(

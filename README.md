@@ -16,8 +16,8 @@ MongoDB를 사용하는 Java Spring Boot 기반의 3D 객체 관리 백엔드 �
 ```
 src/
 ├── main/
-│   ├── java/com/aubotmationlab/be/
-│   │   ├── AubotmationLabBeApplication.java    # 메인 애플리케이션
+│   ├── java/com/automationlab/be/
+│   │   ├── AutomationLabBeApplication.java    # 메인 애플리케이션
 │   │   ├── controller/
 │   │   │   └── Object3DController.java         # REST API 컨트롤러
 │   │   ├── service/
@@ -36,8 +36,8 @@ src/
 │       ├── application-dev.yml                  # 개발 환경 설정
 │       └── application-prod.yml                 # 운영 환경 설정
 └── test/
-    └── java/com/aubotmationlab/be/
-        ├── AubotmationLabBeApplicationTests.java # 기본 테스트
+    └── java/com/automationlab/be/
+        ├── AutomationLabBeApplicationTests.java # 기본 테스트
         └── service/
             └── Object3DServiceTest.java          # 서비스 테스트
 ```
@@ -69,12 +69,7 @@ src/
 - `DELETE /api/v1/objects/{id}` - 객체 삭제
 
 ### 검색 및 필터링
-- `GET /api/v1/objects/name/{name}` - 이름으로 객체 조회
-- `GET /api/v1/objects/category/{category}` - 카테고리별 객체 조회
-- `GET /api/v1/objects/search?name={name}` - 이름 기반 검색
-- `GET /api/v1/objects/dimensions` - 치수 범위별 객체 조회
-- `GET /api/v1/objects/instancing?instancingEnabled={boolean}` - 인스턴싱 여부별 조회
-- `GET /api/v1/objects/categories` - 사용 가능한 카테고리 조회
+- `GET /api/v1/objects/template/{templateName}` - 템플릿별 객체 조회
 
 ## 실행 방법
 
@@ -98,7 +93,7 @@ mvn clean install
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
 # 또는 JAR 파일로 실행
-java -jar target/aubotmationlab-be-1.0.0.jar
+java -jar target/automationlab-be-1.0.0.jar
 ```
 
 ### 3. 환경별 실행
@@ -114,7 +109,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=prod
 
 ### 개발 환경 (application-dev.yml)
 - MongoDB: localhost:27017
-- 데이터베이스: aubotmationlab_dev
+- 데이터베이스: automationlab
 - 로깅 레벨: DEBUG
 
 ### 운영 환경 (application-prod.yml)
@@ -139,16 +134,12 @@ mvn test -Dtest=Object3DServiceTest
 curl -X POST http://localhost:8080/api/v1/objects \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Industrial Robot",
-    "category": "ROBOT",
-    "description": "6-axis industrial robot",
-    "glbFile": "/models/industrial-robot.glb",
-    "width": 2.5,
-    "depth": 2.0,
-    "height": 3.2,
-    "rotation": 0.0,
-    "color": "#FF6B35",
-    "instancingEnabled": true
+    "name": "Industrial Robot Instance",
+    "description": "6-axis industrial robot instance",
+    "degrees": 0.0,
+    "x": 10.0,
+    "y": 5.0,
+    "templateName": "industrial-robot-template"
   }'
 ```
 
@@ -160,29 +151,40 @@ curl http://localhost:8080/api/v1/objects
 # ID로 객체 조회
 curl http://localhost:8080/api/v1/objects/{id}
 
-# 카테고리별 객체 조회
-curl http://localhost:8080/api/v1/objects/category/ROBOT
+# 템플릿별 객체 조회
+curl http://localhost:8080/api/v1/objects/template/industrial-robot-template
 ```
 
 ## 데이터베이스 스키마
 
-MongoDB 컬렉션: `objects`
-
+### Object3D 컬렉션: `objects`
 ```json
 {
   "_id": "ObjectId",
-  "name": "String (Required, Indexed)",
-  "category": "Enum (ROBOT|EQUIPMENT|APPLIANCES|AV)",
+  "name": "String (Required)",
   "description": "String (Optional)",
-  "glbFile": "String (Required)",
+  "degrees": "Double (Required, 0-360)",
+  "x": "Double (Required)",
+  "y": "Double (Required)",
+  "templateName": "String (Required, References Object3DTemplate)"
+}
+```
+
+### Object3DTemplate 컬렉션: `object3d_templates`
+```json
+{
+  "_id": "ObjectId",
+  "name": "String (Required, Unique)",
+  "category": "Enum (ROBOT|EQUIPMENT|APPLIANCES|AV|RACK)",
+  "description": "String (Optional)",
+  "glbFile": "String (Optional)",
   "thumbnailFile": "String (Optional)",
   "lodFile": "String (Optional)",
   "width": "Double (Required, Positive)",
   "depth": "Double (Required, Positive)",
   "height": "Double (Required, Positive)",
-  "rotation": "Double (Required, 0-360)",
   "color": "String (Optional, HEX)",
-  "instancingEnabled": "Boolean (Default: false)"
+  "instancingEnabled": "Boolean (Default: true)"
 }
 ```
 

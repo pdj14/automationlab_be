@@ -1,6 +1,6 @@
-package com.aubotmationlab.be.repository;
+package com.automationlab.be.repository;
 
-import com.aubotmationlab.be.model.Wall;
+import com.automationlab.be.model.Wall;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

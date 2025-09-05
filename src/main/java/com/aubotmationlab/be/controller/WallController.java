@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.controller;
+package com.automationlab.be.controller;
 
-import com.aubotmationlab.be.dto.WallDto;
-import com.aubotmationlab.be.model.Wall;
-import com.aubotmationlab.be.service.WallService;
+import com.automationlab.be.dto.WallDto;
+import com.automationlab.be.model.Wall;
+import com.automationlab.be.service.WallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

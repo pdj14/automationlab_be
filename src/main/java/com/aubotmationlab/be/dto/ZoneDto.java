@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.dto;
+package com.automationlab.be.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

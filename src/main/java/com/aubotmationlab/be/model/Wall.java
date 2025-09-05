@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.model;
+package com.automationlab.be.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.aubotmationlab.be.validation;
+package com.automationlab.be.validation;
 
-import com.aubotmationlab.be.repository.Object3DTemplateRepository;
+import com.automationlab.be.repository.Object3DTemplateRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;

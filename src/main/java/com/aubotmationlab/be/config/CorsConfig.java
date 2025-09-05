@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.config;
+package com.automationlab.be.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.controller;
+package com.automationlab.be.controller;
 
-import com.aubotmationlab.be.dto.Object3DTemplateDto;
-import com.aubotmationlab.be.model.Object3DTemplate;
-import com.aubotmationlab.be.service.Object3DTemplateService;
+import com.automationlab.be.dto.Object3DTemplateDto;
+import com.automationlab.be.model.Object3DTemplate;
+import com.automationlab.be.service.Object3DTemplateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

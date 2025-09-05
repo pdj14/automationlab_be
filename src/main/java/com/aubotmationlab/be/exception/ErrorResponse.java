@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.exception;
+package com.automationlab.be.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

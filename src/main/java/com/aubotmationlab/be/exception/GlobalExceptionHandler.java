@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.exception;
+package com.automationlab.be.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

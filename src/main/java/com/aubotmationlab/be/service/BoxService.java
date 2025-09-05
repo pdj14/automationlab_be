@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.service;
+package com.automationlab.be.service;
 
-import com.aubotmationlab.be.dto.BoxDto;
-import com.aubotmationlab.be.model.Box;
-import com.aubotmationlab.be.repository.BoxRepository;
+import com.automationlab.be.dto.BoxDto;
+import com.automationlab.be.model.Box;
+import com.automationlab.be.repository.BoxRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

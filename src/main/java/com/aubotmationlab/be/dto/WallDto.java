@@ -1,4 +1,4 @@
-package com.aubotmationlab.be.dto;
+package com.automationlab.be.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,7 +38,7 @@ public class WallDto {
     }
 
     // 벽의 회전 각도 계산 (라디안)
-    public Double getRotation() {
+    public Double getDegrees() {
         return Math.atan2(endY - startY, endX - startX);
     }
 

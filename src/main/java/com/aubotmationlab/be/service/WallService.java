@@ -1,8 +1,8 @@
-package com.aubotmationlab.be.service;
+package com.automationlab.be.service;
 
-import com.aubotmationlab.be.dto.WallDto;
-import com.aubotmationlab.be.model.Wall;
-import com.aubotmationlab.be.repository.WallRepository;
+import com.automationlab.be.dto.WallDto;
+import com.automationlab.be.model.Wall;
+import com.automationlab.be.repository.WallRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,8 @@
-package com.aubotmationlab.be.service;
+package com.automationlab.be.service;
 
-import com.aubotmationlab.be.dto.Object3DDto;
-import com.aubotmationlab.be.model.Object3D;
-import com.aubotmationlab.be.model.Object3D.Category;
-import com.aubotmationlab.be.repository.Object3DRepository;
+import com.automationlab.be.dto.Object3DDto;
+import com.automationlab.be.model.Object3D;
+import com.automationlab.be.repository.Object3DRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,30 +34,20 @@ class Object3DServiceTest {
     void setUp() {
         testObjectDto = Object3DDto.builder()
                 .name("Test Robot")
-                .category(Category.ROBOT)
                 .description("A test robot")
-                .width(1.0)
-                .depth(1.0)
-                .height(2.0)
-                .rotation(0.0)
+                .degrees(0.0)
                 .x(0.0)
                 .y(0.0)
-                .color("#FF0000")
                 .templateName("test-template")
                 .build();
 
         testObject = Object3D.builder()
                 .id("test-id")
                 .name("Test Robot")
-                .category(Category.ROBOT)
                 .description("A test robot")
-                .width(1.0)
-                .depth(1.0)
-                .height(2.0)
-                .rotation(0.0)
+                .degrees(0.0)
                 .x(0.0)
                 .y(0.0)
-                .color("#FF0000")
                 .templateName("test-template")
                 .build();
     }
@@ -108,7 +97,6 @@ class Object3DServiceTest {
     @Test
     void createObject_ShouldCreateAndReturnObject_WhenValidInput() {
         // Given
-        when(object3DRepository.existsByName("Test Robot")).thenReturn(false);
         when(object3DRepository.save(any(Object3D.class))).thenReturn(testObject);
 
         // When
@@ -117,39 +105,23 @@ class Object3DServiceTest {
         // Then
         assertNotNull(result);
         assertEquals("Test Robot", result.getName());
-        verify(object3DRepository).existsByName("Test Robot");
         verify(object3DRepository).save(any(Object3D.class));
     }
 
-    @Test
-    void createObject_ShouldThrowException_WhenNameAlreadyExists() {
-        // Given
-        when(object3DRepository.existsByName("Test Robot")).thenReturn(true);
-
-        // When & Then
-        assertThrows(IllegalArgumentException.class, () -> {
-            object3DService.createObject(testObjectDto);
-        });
-        verify(object3DRepository).existsByName("Test Robot");
-        verify(object3DRepository, never()).save(any(Object3D.class));
-    }
 
     @Test
     void updateObject_ShouldUpdateAndReturnObject_WhenExists() {
         // Given
         Object3DDto updateDto = Object3DDto.builder()
                 .name("Updated Robot")
-                .category(Category.ROBOT)
-                .width(2.0)
-                .depth(2.0)
-                .height(3.0)
-                .rotation(90.0)
+                .description("Updated description")
+                .degrees(90.0)
                 .x(10.0)
                 .y(10.0)
+                .templateName("test-template")
                 .build();
 
         when(object3DRepository.findById("test-id")).thenReturn(Optional.of(testObject));
-        when(object3DRepository.existsByName("Updated Robot")).thenReturn(false);
         when(object3DRepository.save(any(Object3D.class))).thenReturn(testObject);
 
         // When

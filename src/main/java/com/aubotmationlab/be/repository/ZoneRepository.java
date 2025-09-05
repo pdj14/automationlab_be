@@ -1,6 +1,6 @@
-package com.aubotmationlab.be.repository;
+package com.automationlab.be.repository;
 
-import com.aubotmationlab.be.model.Zone;
+import com.automationlab.be.model.Zone;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

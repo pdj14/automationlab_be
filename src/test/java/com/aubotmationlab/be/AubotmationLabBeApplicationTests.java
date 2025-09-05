@@ -1,10 +1,10 @@
-package com.aubotmationlab.be;
+package com.automationlab.be;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AubotmationLabBeApplicationTests {
+class AutomationLabBeApplicationTests {
 
     @Test
     void contextLoads() {
