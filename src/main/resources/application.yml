@@ -54,10 +54,10 @@ springdoc:
     operations-sorter: method
     tags-sorter: alpha
   info:
-    title: Aubotmation Lab Backend API
-    description: Backend service for Aubotmation Lab with MongoDB
+    title: Automation Lab Backend API
+    description: Backend service for Automation Lab with MongoDB
     version: 1.0.0
     contact:
-      name: Aubotmation Lab Team
+      name: Automation Lab Team
       email: support@automationlab.com
   packages-to-scan: com.automationlab.be.controller

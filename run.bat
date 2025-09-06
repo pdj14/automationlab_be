@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-echo Aubotmation Lab Backend Service 실행 스크립트
+echo Automation Lab Backend Service 실행 스크립트
 echo ================================================
 
 echo 1. 프로젝트 빌드 중...

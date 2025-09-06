@@ -1,12 +1,12 @@
 spring:
   application:
-    name: aubotmationlab-be
+    name: automationlab-be
   
   data:
     mongodb:
       host: localhost
       port: 27017
-      database: aubotmationlab_dev
+      database: automationlab
       auto-index-creation: false
   
   jackson:
@@ -31,7 +31,7 @@ server:
 
 logging:
   level:
-    com.aubotmationlab.be: DEBUG
+    com.automationlab.be: DEBUG
     org.springframework.data.mongodb: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
@@ -54,10 +54,10 @@ springdoc:
     operations-sorter: method
     tags-sorter: alpha
   info:
-    title: Aubotmation Lab Backend API
-    description: Backend service for Aubotmation Lab with MongoDB
+    title: Automation Lab Backend API
+    description: Backend service for Automation Lab with MongoDB
     version: 1.0.0
     contact:
-      name: Aubotmation Lab Team
-      email: support@aubotmationlab.com
-  packages-to-scan: com.aubotmationlab.be.controller
+      name: Automation Lab Team
+      email: support@automationlab.com
+  packages-to-scan: com.automationlab.be.controller

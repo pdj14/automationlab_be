@@ -17,12 +17,12 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Aubotmation Lab Backend API")
-                        .description("Backend service for Aubotmation Lab with MongoDB. " +
+                        .title("Automation Lab Backend API")
+                        .description("Backend service for Automation Lab with MongoDB. " +
                                 "Provides RESTful APIs for managing 3D objects, boxes, walls, and zones.")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .name("Aubotmation Lab Team")
+                                .name("Automation Lab Team")
                                 .email("support@automationlab.com")
                                 .url("https://automationlab.com"))
                         .license(new License()

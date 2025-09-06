@@ -1,4 +1,4 @@
-# Aubotmation Lab Backend Service
+# Automation Lab Backend Service
 
 MongoDB를 사용하는 Java Spring Boot 기반의 3D 객체 관리 백엔드 서비스입니다.
 

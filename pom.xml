@@ -12,11 +12,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.aubotmationlab</groupId>
-    <artifactId>aubotmationlab-be</artifactId>
+    <groupId>com.automationlab</groupId>
+    <artifactId>automationlab-be</artifactId>
     <version>1.0.0</version>
-    <name>aubotmationlab-be</name>
-    <description>Backend service for Aubotmation Lab with MongoDB</description>
+    <name>automationlab-be</name>
+    <description>Backend service for Automation Lab with MongoDB</description>
 
     <properties>
         <java.version>13</java.version>
