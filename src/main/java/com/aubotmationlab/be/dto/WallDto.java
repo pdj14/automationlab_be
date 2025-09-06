@@ -30,14 +30,14 @@ public class WallDto {
     @NotNull(message = "Is glass flag is required")
     private Boolean isGlass;
 
-    // 벽의 길이 계산 (인스턴싱 시 스케일로 사용)
+    // 벽의 길이 계산 (?�스?�싱 ???��??�로 ?�용)
     public Double getLength() {
         double dx = endX - startX;
         double dy = endY - startY;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    // 벽의 회전 각도 계산 (라디안)
+    // 벽의 ?�전 각도 계산 (?�디??
     public Double getDegrees() {
         return Math.atan2(endY - startY, endX - startX);
     }

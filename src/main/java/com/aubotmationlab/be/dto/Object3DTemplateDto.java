@@ -29,12 +29,12 @@ public class Object3DTemplateDto {
 
     private String description;
 
-    // 파일 업로드용 필드들 (MultipartFile)
+    // ?�일 ?�로?�용 ?�드??(MultipartFile)
     private MultipartFile glbFile;
     private MultipartFile thumbnailFile;
     private MultipartFile lodFile;
 
-    // 파일 경로 필드들 (String) - DB에서 조회 시 사용
+    // ?�일 경로 ?�드??(String) - DB?�서 조회 ???�용
     private String glbFilePath;
     private String thumbnailFilePath;
     private String lodFilePath;

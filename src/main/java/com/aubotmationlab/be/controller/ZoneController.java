@@ -61,21 +61,21 @@ public class ZoneController {
         return ResponseEntity.notFound().build();
     }
 
-    // 인스턴싱을 위한 색상별 Zone 그룹화
+    // ?�스?�싱???�한 ?�상�?Zone 그룹??
     @GetMapping("/color-groups")
     public ResponseEntity<Map<String, List<Zone>>> getZonesByColorGroup() {
         Map<String, List<Zone>> zonesByColor = zoneService.getZonesByColorGroup();
         return ResponseEntity.ok(zonesByColor);
     }
 
-    // 특정 색상의 Zone들 조회
+    // ?�정 ?�상??Zone??조회
     @GetMapping("/color/{color}")
     public ResponseEntity<List<Zone>> getZonesByColor(@PathVariable String color) {
         List<Zone> zones = zoneService.getZonesByColor(color);
         return ResponseEntity.ok(zones);
     }
 
-    // 색상별 Zone 개수 조회
+    // ?�상�?Zone 개수 조회
     @GetMapping("/color-counts")
     public ResponseEntity<Map<String, Long>> getZoneCountByColor() {
         Map<String, Long> colorCounts = zoneService.getZoneCountByColor();

@@ -17,9 +17,6 @@ public class Object3DDto {
 
     private String id;
 
-    @NotNull(message = "Name is required")
-    private String name;
-
     private String description;
 
     @NotNull(message = "Degrees is required")

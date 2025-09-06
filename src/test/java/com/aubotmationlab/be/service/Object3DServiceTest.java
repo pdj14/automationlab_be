@@ -33,7 +33,6 @@ class Object3DServiceTest {
     @BeforeEach
     void setUp() {
         testObjectDto = Object3DDto.builder()
-                .name("Test Robot")
                 .description("A test robot")
                 .degrees(0.0)
                 .x(0.0)
@@ -43,7 +42,6 @@ class Object3DServiceTest {
 
         testObject = Object3D.builder()
                 .id("test-id")
-                .name("Test Robot")
                 .description("A test robot")
                 .degrees(0.0)
                 .x(0.0)
@@ -63,7 +61,7 @@ class Object3DServiceTest {
         // Then
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Test Robot", result.get(0).getName());
+        assertEquals("A test robot", result.get(0).getDescription());
         verify(object3DRepository).findAll();
     }
 
@@ -77,7 +75,7 @@ class Object3DServiceTest {
 
         // Then
         assertTrue(result.isPresent());
-        assertEquals("Test Robot", result.get().getName());
+        assertEquals("A test robot", result.get().getDescription());
         verify(object3DRepository).findById("test-id");
     }
 
@@ -104,7 +102,7 @@ class Object3DServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals("Test Robot", result.getName());
+        assertEquals("A test robot", result.getDescription());
         verify(object3DRepository).save(any(Object3D.class));
     }
 
@@ -113,7 +111,6 @@ class Object3DServiceTest {
     void updateObject_ShouldUpdateAndReturnObject_WhenExists() {
         // Given
         Object3DDto updateDto = Object3DDto.builder()
-                .name("Updated Robot")
                 .description("Updated description")
                 .degrees(90.0)
                 .x(10.0)

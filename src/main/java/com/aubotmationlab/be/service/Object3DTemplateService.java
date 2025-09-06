@@ -59,7 +59,7 @@ public class Object3DTemplateService {
     }
 
     public Object3DTemplateDto createTemplate(Object3DTemplateDto templateDto) {
-        // 이름 중복 검증
+        // ?�름 중복 검�?
         if (object3DTemplateRepository.existsByName(templateDto.getName())) {
             throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
         }
@@ -71,7 +71,7 @@ public class Object3DTemplateService {
 
     public Object3DTemplateDto createTemplateWithFiles(Object3DTemplateDto templateDto) {
         try {
-            // 이름 중복 검증
+            // ?�름 중복 검�?
             if (object3DTemplateRepository.existsByName(templateDto.getName())) {
                 throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
             }
@@ -80,22 +80,22 @@ public class Object3DTemplateService {
             String thumbnailFilePath = null;
             String lodFilePath = null;
 
-            // GLB 파일 저장
+            // GLB ?�일 ?�??
             if (templateDto.getGlbFile() != null && !templateDto.getGlbFile().isEmpty()) {
                 glbFilePath = fileStorageService.storeFile(templateDto.getGlbFile(), templateDto.getName(), "glb");
             }
 
-            // 썸네일 파일 저장
+            // ?�네???�일 ?�??
             if (templateDto.getThumbnailFile() != null && !templateDto.getThumbnailFile().isEmpty()) {
                 thumbnailFilePath = fileStorageService.storeFile(templateDto.getThumbnailFile(), templateDto.getName(), "thumbnail");
             }
 
-            // LOD 파일 저장
+            // LOD ?�일 ?�??
             if (templateDto.getLodFile() != null && !templateDto.getLodFile().isEmpty()) {
                 lodFilePath = fileStorageService.storeFile(templateDto.getLodFile(), templateDto.getName(), "lod");
             }
 
-            // 템플릿 생성
+            // ?�플�??�성
             Object3DTemplate template = Object3DTemplate.builder()
                     .name(templateDto.getName())
                     .category(templateDto.getCategory())
@@ -122,7 +122,7 @@ public class Object3DTemplateService {
         Object3DTemplate existingTemplate = object3DTemplateRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
         
-        // 이름이 변경되는 경우 중복 검증
+        // ?�름??변경되??경우 중복 검�?
         if (!existingTemplate.getName().equals(templateDto.getName()) && 
             object3DTemplateRepository.existsByName(templateDto.getName())) {
             throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
@@ -139,10 +139,10 @@ public class Object3DTemplateService {
                 .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
         
         try {
-            // 템플릿 폴더 전체 삭제
+            // ?�플�??�더 ?�체 ??��
             fileStorageService.deleteTemplateFolder(template.getName());
             
-            // 데이터베이스에서 템플릿 삭제
+            // ?�이?�베?�스?�서 ?�플�???��
             object3DTemplateRepository.deleteById(id);
             
         } catch (IOException e) {
@@ -156,10 +156,10 @@ public class Object3DTemplateService {
                 .name(template.getName())
                 .category(template.getCategory())
                 .description(template.getDescription())
-                .glbFile(null) // MultipartFile은 null로 설정
+                .glbFile(null) // MultipartFile?� null�??�정
                 .thumbnailFile(null)
                 .lodFile(null)
-                .glbFilePath(template.getGlbFile()) // 파일 경로는 String으로 설정
+                .glbFilePath(template.getGlbFile()) // ?�일 경로??String?�로 ?�정
                 .thumbnailFilePath(template.getThumbnailFile())
                 .lodFilePath(template.getLodFile())
                 .width(template.getWidth())
@@ -175,7 +175,7 @@ public class Object3DTemplateService {
                 .name(dto.getName())
                 .category(dto.getCategory())
                 .description(dto.getDescription())
-                .glbFile(dto.getGlbFilePath()) // 파일 경로 사용
+                .glbFile(dto.getGlbFilePath()) // ?�일 경로 ?�용
                 .thumbnailFile(dto.getThumbnailFilePath())
                 .lodFile(dto.getLodFilePath())
                 .width(dto.getWidth())

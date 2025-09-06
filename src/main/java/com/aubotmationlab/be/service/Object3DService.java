@@ -48,12 +48,11 @@ public class Object3DService {
 
 
     public Object3DDto createObject(Object3DDto object3DDto) {
-        // 템플릿 정보 가져오기
+        // ?�플�??�보 가?�오�?
         Object3DTemplateDto template = object3DTemplateService.getTemplateByName(object3DDto.getTemplateName());
         
-        // Object3D 생성 (템플릿 정보를 기본값으로 사용)
+        // Object3D ?�성 (?�플�??�보�?기본값으�??�용)
         Object3D object3D = Object3D.builder()
-                .name(object3DDto.getName())
                 .description(object3DDto.getDescription() != null ? object3DDto.getDescription() : template.getDescription())
                 .degrees(object3DDto.getDegrees())
                 .x(object3DDto.getX())
@@ -68,7 +67,7 @@ public class Object3DService {
     }
 
     public Object3DDto createObjectFromTemplate(String templateName, Object3DDto object3DDto) {
-        // templateName을 설정하고 createObject 호출
+        // templateName???�정?�고 createObject ?�출
         object3DDto.setTemplateName(templateName);
         return createObject(object3DDto);
     }
@@ -108,7 +107,6 @@ public class Object3DService {
 
     private Object3D convertToEntity(Object3DDto dto) {
         return Object3D.builder()
-                .name(dto.getName())
                 .description(dto.getDescription())
                 .degrees(dto.getDegrees())
                 .x(dto.getX())
@@ -120,7 +118,6 @@ public class Object3DService {
     private Object3DDto convertToDto(Object3D entity) {
         return Object3DDto.builder()
                 .id(entity.getId())
-                .name(entity.getName())
                 .description(entity.getDescription())
                 .degrees(entity.getDegrees())
                 .x(entity.getX())
@@ -130,7 +127,6 @@ public class Object3DService {
     }
 
     private Object3D updateEntityFromDto(Object3D existingObject, Object3DDto dto) {
-        existingObject.setName(dto.getName());
         existingObject.setDescription(dto.getDescription());
         existingObject.setDegrees(dto.getDegrees());
         existingObject.setX(dto.getX());

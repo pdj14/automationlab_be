@@ -10,8 +10,5 @@ import java.util.List;
 @Repository
 public interface Object3DRepository extends MongoRepository<Object3D, String> {
 
-
     List<Object3D> findByTemplateName(String templateName);
-
-    boolean existsByName(String name);
 }

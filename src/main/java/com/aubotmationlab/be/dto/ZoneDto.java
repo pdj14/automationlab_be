@@ -37,17 +37,17 @@ public class ZoneDto {
 
     private String color;
 
-    // 인스턴싱을 위한 색상 그룹 식별자
+    // ?�스?�싱???�한 ?�상 그룹 ?�별??
     public String getColorGroup() {
         return this.color != null ? this.color.toLowerCase() : "default";
     }
 
-    // Zone의 중점 X 좌표 (인스턴싱 시 위치로 사용)
+    // Zone??중점 X 좌표 (?�스?�싱 ???�치�??�용)
     public Double getCenterX() {
         return x + (width / 2.0);
     }
 
-    // Zone의 중점 Y 좌표 (인스턴싱 시 위치로 사용)
+    // Zone??중점 Y 좌표 (?�스?�싱 ???�치�??�용)
     public Double getCenterY() {
         return y + (height / 2.0);
     }

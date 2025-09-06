@@ -21,9 +21,6 @@ public class Object3D {
     @Id
     private String id;
 
-    @NotNull(message = "Name is required")
-    private String name;
-
     private String description;
 
     @NotNull(message = "Degrees is required")
@@ -37,7 +34,7 @@ public class Object3D {
     @NotNull(message = "Y coordinate is required")
     private Double y;
 
-    // 템플릿 참조 필드 (필수)
+    // ?�플�?참조 ?�드 (?�수)
     @NotNull(message = "Template name is required")
     private String templateName;
 

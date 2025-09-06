@@ -75,7 +75,7 @@ public class ZoneService {
         return false;
     }
 
-    // 인스턴싱을 위한 색상별 Zone 그룹화
+    // ?�스?�싱???�한 ?�상�?Zone 그룹??
     public Map<String, List<Zone>> getZonesByColorGroup() {
         List<Zone> allZones = zoneRepository.findAll();
         return allZones.stream()
@@ -84,12 +84,12 @@ public class ZoneService {
                 ));
     }
 
-    // 특정 색상의 Zone들 조회
+    // ?�정 ?�상??Zone??조회
     public List<Zone> getZonesByColor(String color) {
         return zoneRepository.findByColor(color);
     }
 
-    // 색상별 Zone 개수 조회
+    // ?�상�?Zone 개수 조회
     public Map<String, Long> getZoneCountByColor() {
         List<Zone> allZones = zoneRepository.findAll();
         return allZones.stream()

@@ -179,7 +179,7 @@ public class Object3DTemplateController {
             Object3DTemplateDto template = object3DTemplateService.getTemplateById(id);
             Map<String, Object> response = new HashMap<>();
             
-            // 템플릿 기본 정보
+            // ?�플�?기본 ?�보
             response.put("id", template.getId());
             response.put("name", template.getName());
             response.put("category", template.getCategory());
@@ -190,10 +190,10 @@ public class Object3DTemplateController {
             response.put("color", template.getColor());
             response.put("instancingEnabled", template.getInstancingEnabled());
             
-            // 파일들을 Base64로 인코딩하여 포함
+            // ?�일?�을 Base64�??�코?�하???�함
             Map<String, String> files = new HashMap<>();
             
-            // GLB 파일
+            // GLB ?�일
             if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
                 Path glbFile = object3DTemplateService.getFilePath(template.getGlbFilePath());
                 if (Files.exists(glbFile)) {
@@ -203,7 +203,7 @@ public class Object3DTemplateController {
                 }
             }
             
-            // 썸네일 파일
+            // ?�네???�일
             if (template.getThumbnailFilePath() != null && !template.getThumbnailFilePath().isEmpty()) {
                 Path thumbnailFile = object3DTemplateService.getFilePath(template.getThumbnailFilePath());
                 if (Files.exists(thumbnailFile)) {
@@ -213,7 +213,7 @@ public class Object3DTemplateController {
                 }
             }
             
-            // LOD 파일
+            // LOD ?�일
             if (template.getLodFilePath() != null && !template.getLodFilePath().isEmpty()) {
                 Path lodFile = object3DTemplateService.getFilePath(template.getLodFilePath());
                 if (Files.exists(lodFile)) {
@@ -241,7 +241,7 @@ public class Object3DTemplateController {
             for (Object3DTemplateDto template : templates) {
                 Map<String, Object> templateData = new HashMap<>();
                 
-                // 템플릿 기본 정보
+                // ?�플�?기본 ?�보
                 templateData.put("id", template.getId());
                 templateData.put("name", template.getName());
                 templateData.put("category", template.getCategory());
@@ -252,10 +252,10 @@ public class Object3DTemplateController {
                 templateData.put("color", template.getColor());
                 templateData.put("instancingEnabled", template.getInstancingEnabled());
                 
-                // 파일들을 Base64로 인코딩하여 포함
+                // ?�일?�을 Base64�??�코?�하???�함
                 Map<String, String> files = new HashMap<>();
                 
-                // GLB 파일
+                // GLB ?�일
                 if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
                     Path glbFile = object3DTemplateService.getFilePath(template.getGlbFilePath());
                     if (Files.exists(glbFile)) {
@@ -265,7 +265,7 @@ public class Object3DTemplateController {
                     }
                 }
                 
-                // 썸네일 파일
+                // ?�네???�일
                 if (template.getThumbnailFilePath() != null && !template.getThumbnailFilePath().isEmpty()) {
                     Path thumbnailFile = object3DTemplateService.getFilePath(template.getThumbnailFilePath());
                     if (Files.exists(thumbnailFile)) {
@@ -275,7 +275,7 @@ public class Object3DTemplateController {
                     }
                 }
                 
-                // LOD 파일
+                // LOD ?�일
                 if (template.getLodFilePath() != null && !template.getLodFilePath().isEmpty()) {
                     Path lodFile = object3DTemplateService.getFilePath(template.getLodFilePath());
                     if (Files.exists(lodFile)) {
@@ -302,7 +302,7 @@ public class Object3DTemplateController {
             Object3DTemplateDto template = object3DTemplateService.getTemplateById(id);
             Map<String, Object> response = new HashMap<>();
             
-            // 템플릿 기본 정보
+            // ?�플�?기본 ?�보
             response.put("id", template.getId());
             response.put("name", template.getName());
             response.put("category", template.getCategory());
@@ -313,7 +313,7 @@ public class Object3DTemplateController {
             response.put("color", template.getColor());
             response.put("instancingEnabled", template.getInstancingEnabled());
             
-            // 파일 다운로드 URL들
+            // ?�일 ?�운로드 URL??
             Map<String, String> fileUrls = new HashMap<>();
             
             if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
@@ -346,7 +346,7 @@ public class Object3DTemplateController {
             for (Object3DTemplateDto template : templates) {
                 Map<String, Object> templateData = new HashMap<>();
                 
-                // 템플릿 기본 정보
+                // ?�플�?기본 ?�보
                 templateData.put("id", template.getId());
                 templateData.put("name", template.getName());
                 templateData.put("category", template.getCategory());
@@ -357,7 +357,7 @@ public class Object3DTemplateController {
                 templateData.put("color", template.getColor());
                 templateData.put("instancingEnabled", template.getInstancingEnabled());
                 
-                // 파일 다운로드 URL들
+                // ?�일 ?�운로드 URL??
                 Map<String, String> fileUrls = new HashMap<>();
                 
                 if (template.getGlbFilePath() != null && !template.getGlbFilePath().isEmpty()) {
