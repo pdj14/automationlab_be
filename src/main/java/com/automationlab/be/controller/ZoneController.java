@@ -61,21 +61,21 @@ public class ZoneController {
         return ResponseEntity.notFound().build();
     }
 
-    // ?¸ìŠ¤?´ì‹±???„í•œ ?‰ìƒë³?Zone ê·¸ë£¹??
+    // Group zones by color for processing
     @GetMapping("/color-groups")
     public ResponseEntity<Map<String, List<Zone>>> getZonesByColorGroup() {
         Map<String, List<Zone>> zonesByColor = zoneService.getZonesByColorGroup();
         return ResponseEntity.ok(zonesByColor);
     }
 
-    // ?¹ì • ?‰ìƒ??Zone??ì¡°íšŒ
+    // Query zones by specific color
     @GetMapping("/color/{color}")
     public ResponseEntity<List<Zone>> getZonesByColor(@PathVariable String color) {
         List<Zone> zones = zoneService.getZonesByColor(color);
         return ResponseEntity.ok(zones);
     }
 
-    // ?‰ìƒë³?Zone ê°œìˆ˜ ì¡°íšŒ
+    // Query zone count by color
     @GetMapping("/color-counts")
     public ResponseEntity<Map<String, Long>> getZoneCountByColor() {
         Map<String, Long> colorCounts = zoneService.getZoneCountByColor();

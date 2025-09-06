@@ -59,7 +59,7 @@ public class Object3DTemplateService {
     }
 
     public Object3DTemplateDto createTemplate(Object3DTemplateDto templateDto) {
-        // ?¥Î¶Ñ Ï§ëÎ≥µ Í≤ÄÏ¶?
+        // Check name duplication
         if (object3DTemplateRepository.existsByName(templateDto.getName())) {
             throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
         }
@@ -71,7 +71,7 @@ public class Object3DTemplateService {
 
     public Object3DTemplateDto createTemplateWithFiles(Object3DTemplateDto templateDto) {
         try {
-            // ?¥Î¶Ñ Ï§ëÎ≥µ Í≤ÄÏ¶?
+            // Check name duplication
             if (object3DTemplateRepository.existsByName(templateDto.getName())) {
                 throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
             }
@@ -80,22 +80,22 @@ public class Object3DTemplateService {
             String thumbnailFilePath = null;
             String lodFilePath = null;
 
-            // GLB ?åÏùº ?Ä??
+            // Save GLB file
             if (templateDto.getGlbFile() != null && !templateDto.getGlbFile().isEmpty()) {
                 glbFilePath = fileStorageService.storeFile(templateDto.getGlbFile(), templateDto.getName(), "glb");
             }
 
-            // ?∏ÎÑ§???åÏùº ?Ä??
+            // Save thumbnail file
             if (templateDto.getThumbnailFile() != null && !templateDto.getThumbnailFile().isEmpty()) {
                 thumbnailFilePath = fileStorageService.storeFile(templateDto.getThumbnailFile(), templateDto.getName(), "thumbnail");
             }
 
-            // LOD ?åÏùº ?Ä??
+            // Save LOD file
             if (templateDto.getLodFile() != null && !templateDto.getLodFile().isEmpty()) {
                 lodFilePath = fileStorageService.storeFile(templateDto.getLodFile(), templateDto.getName(), "lod");
             }
 
-            // ?úÌîåÎ¶??ùÏÑ±
+            // Create template
             Object3DTemplate template = Object3DTemplate.builder()
                     .name(templateDto.getName())
                     .category(templateDto.getCategory())
@@ -122,7 +122,7 @@ public class Object3DTemplateService {
         Object3DTemplate existingTemplate = object3DTemplateRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
         
-        // ?¥Î¶Ñ??Î≥ÄÍ≤ΩÎêò??Í≤ΩÏö∞ Ï§ëÎ≥µ Í≤ÄÏ¶?
+        // Check duplication if name is changed
         if (!existingTemplate.getName().equals(templateDto.getName()) && 
             object3DTemplateRepository.existsByName(templateDto.getName())) {
             throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
@@ -139,10 +139,10 @@ public class Object3DTemplateService {
                 .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
         
         try {
-            // ?úÌîåÎ¶??¥Îçî ?ÑÏ≤¥ ??†ú
+            // Delete entire template folder
             fileStorageService.deleteTemplateFolder(template.getName());
             
-            // ?∞Ïù¥?∞Î≤†?¥Ïä§?êÏÑú ?úÌîåÎ¶???†ú
+            // Delete template from database
             object3DTemplateRepository.deleteById(id);
             
         } catch (IOException e) {
@@ -156,10 +156,10 @@ public class Object3DTemplateService {
                 .name(template.getName())
                 .category(template.getCategory())
                 .description(template.getDescription())
-                .glbFile(null) // MultipartFile?Ä nullÎ°??§Ï†ï
+                .glbFile(null) // Set MultipartFile to null
                 .thumbnailFile(null)
                 .lodFile(null)
-                .glbFilePath(template.getGlbFile()) // ?åÏùº Í≤ΩÎ°ú??String?ºÎ°ú ?§Ï†ï
+                .glbFilePath(template.getGlbFile()) // Set file path as String
                 .thumbnailFilePath(template.getThumbnailFile())
                 .lodFilePath(template.getLodFile())
                 .width(template.getWidth())
@@ -175,7 +175,7 @@ public class Object3DTemplateService {
                 .name(dto.getName())
                 .category(dto.getCategory())
                 .description(dto.getDescription())
-                .glbFile(dto.getGlbFilePath()) // ?åÏùº Í≤ΩÎ°ú ?¨Ïö©
+                .glbFile(dto.getGlbFilePath()) // Use file path
                 .thumbnailFile(dto.getThumbnailFilePath())
                 .lodFile(dto.getLodFilePath())
                 .width(dto.getWidth())

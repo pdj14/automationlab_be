@@ -22,32 +22,32 @@ public class FileStorageService {
             throw new IllegalArgumentException("File is empty");
         }
 
-        // ?Œì¼ ?•ì¥??ê²€ì¦?
+        // File name validation
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isEmpty()) {
             throw new IllegalArgumentException("File name is empty");
         }
 
-        // ?œí”Œë¦??´ë¦„?¼ë¡œ ?´ë”ëª??ì„± (?¹ìˆ˜ë¬¸ì ?œê±°)
+        // Create folder using template name (remove special characters)
         String safeTemplateName = sanitizeFolderName(templateName);
         
-        // ?Œì¼ ?•ì¥??ê°€?¸ì˜¤ê¸?
+        // Get file extension
         String fileExtension = getFileExtension(originalFilename);
         
-        // ?Œì¼ëª??ì„± (?œí”Œë¦¿ì´ë¦??Œì¼?€??+ ?•ì¥??
+        // Create filename (template name + file type + extension)
         String filename = safeTemplateName + "_" + fileType + fileExtension;
 
-        // ?”ë ‰? ë¦¬ ?ì„±: objectTemplate/templates/{templateName}/
+        // Create directory: objectTemplate/templates/{templateName}/
         Path templateDir = Paths.get(uploadDir, "templates", safeTemplateName);
         if (!Files.exists(templateDir)) {
             Files.createDirectories(templateDir);
         }
 
-        // ?Œì¼ ?€??
+        // Save file
         Path targetLocation = templateDir.resolve(filename);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-        // ?ë? ê²½ë¡œ ë°˜í™˜ (?? templates/templateName/glb.glb)
+        // Return relative path (e.g., templates/templateName/glb.glb)
         return Paths.get("templates", safeTemplateName, filename).toString().replace("\\", "/");
     }
 
@@ -65,9 +65,9 @@ public class FileStorageService {
             String safeTemplateName = sanitizeFolderName(templateName);
             Path templateDir = Paths.get(uploadDir, "templates", safeTemplateName);
             if (Files.exists(templateDir)) {
-                // ?´ë” ??ëª¨ë“  ?Œì¼ ?? œ
+                // Delete all files in folder recursively
                 Files.walk(templateDir)
-                    .sorted((a, b) -> b.compareTo(a)) // ??ˆœ ?•ë ¬ (?Œì¼ ë¨¼ì?, ?´ë” ?˜ì¤‘??
+                    .sorted((a, b) -> b.compareTo(a)) // Reverse order (files first, folders last)
                     .forEach(path -> {
                         try {
                             Files.delete(path);
@@ -104,13 +104,12 @@ public class FileStorageService {
             throw new IllegalArgumentException("Template name cannot be null or empty");
         }
         
-        // ?¹ìˆ˜ë¬¸ì ?œê±° ë°??ˆì „???´ë”ëª??ì„±
+        // Remove special characters and create safe folder name
         return templateName
-                .replaceAll("[^a-zA-Z0-9ê°€-??-]", "_") // ?ë¬¸, ?«ì, ?œê?, ?¸ë”?¤ì½”?? ?˜ì´?ˆë§Œ ?ˆìš©
-                .replaceAll("_{2,}", "_") // ?°ì†???¸ë”?¤ì½”?´ë? ?˜ë‚˜ë¡?
-                .replaceAll("^_|_$", "") // ?ë’¤ ?¸ë”?¤ì½”???œê±°
-                .toLowerCase(); // ?Œë¬¸?ë¡œ ë³€??
+                .replaceAll("[^a-zA-Z0-9ê°€-í£-]", "_") // Only allow letters, numbers, Korean, hyphens
+                .replaceAll("_{2,}", "_") // Replace multiple underscores with single
+                .replaceAll("^_|_$", "") // Remove leading/trailing underscores
+                .toLowerCase(); // Convert to lowercase
     }
-
 
 }

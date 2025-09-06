@@ -75,7 +75,7 @@ public class ZoneService {
         return false;
     }
 
-    // ?¸ìŠ¤?´ì‹±???„í•œ ?‰ìƒë³?Zone ê·¸ë£¹??
+    // Group zones by color for processing
     public Map<String, List<Zone>> getZonesByColorGroup() {
         List<Zone> allZones = zoneRepository.findAll();
         return allZones.stream()
@@ -84,12 +84,12 @@ public class ZoneService {
                 ));
     }
 
-    // ?¹ì • ?‰ìƒ??Zone??ì¡°íšŒ
+    // Query zones by specific color
     public List<Zone> getZonesByColor(String color) {
         return zoneRepository.findByColor(color);
     }
 
-    // ?‰ìƒë³?Zone ê°œìˆ˜ ì¡°íšŒ
+    // Query zone count by color
     public Map<String, Long> getZoneCountByColor() {
         List<Zone> allZones = zoneRepository.findAll();
         return allZones.stream()

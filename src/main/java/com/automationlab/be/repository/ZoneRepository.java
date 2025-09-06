@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface ZoneRepository extends MongoRepository<Zone, String> {
     
-    // ?‰ìƒë³?Zone ì¡°íšŒ (?¸ìŠ¤?´ì‹± ê·¸ë£¹?”ìš©)
+    // Query zones by color (for processing grouping)
     List<Zone> findByColor(String color);
     
-    // ?‰ìƒë³?Zone ê°œìˆ˜ ì¡°íšŒ
+    // Query zone count by color
     long countByColor(String color);
 }

@@ -29,12 +29,12 @@ public class Object3DTemplateDto {
 
     private String description;
 
-    // ?Œì¼ ?…ë¡œ?œìš© ?„ë“œ??(MultipartFile)
+    // File upload fields (MultipartFile)
     private MultipartFile glbFile;
     private MultipartFile thumbnailFile;
     private MultipartFile lodFile;
 
-    // ?Œì¼ ê²½ë¡œ ?„ë“œ??(String) - DB?ì„œ ì¡°íšŒ ???¬ìš©
+    // File path fields (String) - used when querying from DB
     private String glbFilePath;
     private String thumbnailFilePath;
     private String lodFilePath;

@@ -14,16 +14,16 @@ public class UniqueTemplateNameValidator implements ConstraintValidator<UniqueTe
 
     @Override
     public void initialize(UniqueTemplateName constraintAnnotation) {
-        // 초기??로직???�요??경우 ?�기??구현
+        // Initialize logic if needed
     }
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext context) {
         if (name == null || name.trim().isEmpty()) {
-            return true; // null?�나 �?값�? ?�른 검증에??처리
+            return true; // Let other validations handle null or empty values
         }
         
-        // ?�름???��? 존재?�는지 ?�인
+        // Check if name already exists
         return !object3DTemplateRepository.existsByName(name);
     }
 }

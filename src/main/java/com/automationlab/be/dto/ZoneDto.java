@@ -37,17 +37,17 @@ public class ZoneDto {
 
     private String color;
 
-    // ?¸ìŠ¤?´ì‹±???„í•œ ?‰ìƒ ê·¸ë£¹ ?ë³„??
+    // Color group for processing (for internal use)
     public String getColorGroup() {
         return this.color != null ? this.color.toLowerCase() : "default";
     }
 
-    // Zone??ì¤‘ì  X ì¢Œí‘œ (?¸ìŠ¤?´ì‹± ???„ì¹˜ë¡??¬ìš©)
+    // Zone center X coordinate (for processing positioning)
     public Double getCenterX() {
         return x + (width / 2.0);
     }
 
-    // Zone??ì¤‘ì  Y ì¢Œí‘œ (?¸ìŠ¤?´ì‹± ???„ì¹˜ë¡??¬ìš©)
+    // Zone center Y coordinate (for processing positioning)
     public Double getCenterY() {
         return y + (height / 2.0);
     }

@@ -34,9 +34,6 @@ public class Object3DService {
                 .map(this::convertToDto);
     }
 
-
-
-
     public List<Object3DDto> getObjectsByTemplateName(String templateName) {
         return object3DRepository.findByTemplateName(templateName)
                 .stream()
@@ -44,14 +41,11 @@ public class Object3DService {
                 .collect(Collectors.toList());
     }
 
-
-
-
     public Object3DDto createObject(Object3DDto object3DDto) {
-        // ?�플�??�보 가?�오�?
+        // Get template information
         Object3DTemplateDto template = object3DTemplateService.getTemplateByName(object3DDto.getTemplateName());
         
-        // Object3D ?�성 (?�플�??�보�?기본값으�??�용)
+        // Create Object3D (using template information as default values)
         Object3D object3D = Object3D.builder()
                 .description(object3DDto.getDescription() != null ? object3DDto.getDescription() : template.getDescription())
                 .degrees(object3DDto.getDegrees())
@@ -67,7 +61,7 @@ public class Object3DService {
     }
 
     public Object3DDto createObjectFromTemplate(String templateName, Object3DDto object3DDto) {
-        // templateName???�정?�고 createObject ?�출
+        // Set templateName and call createObject
         object3DDto.setTemplateName(templateName);
         return createObject(object3DDto);
     }

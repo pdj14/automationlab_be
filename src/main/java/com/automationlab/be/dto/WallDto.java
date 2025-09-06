@@ -30,24 +30,24 @@ public class WallDto {
     @NotNull(message = "Is glass flag is required")
     private Boolean isGlass;
 
-    // 벽의 길이 계산 (?�스?�싱 ???��??�로 ?�용)
+    // Calculate wall length (for processing positioning)
     public Double getLength() {
         double dx = endX - startX;
         double dy = endY - startY;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    // 벽의 ?�전 각도 계산 (?�디??
+    // Calculate wall rotation angle (in radians)
     public Double getDegrees() {
         return Math.atan2(endY - startY, endX - startX);
     }
 
-    // 벽의 중점 X 좌표
+    // Wall center X coordinate
     public Double getCenterX() {
         return (startX + endX) / 2.0;
     }
 
-    // 벽의 중점 Y 좌표
+    // Wall center Y coordinate
     public Double getCenterY() {
         return (startY + endY) / 2.0;
     }

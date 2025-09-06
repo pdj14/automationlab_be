@@ -1,24 +1,20 @@
-package com.automationlab.be.model;
+package com.automationlab.be.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.DecimalMax;
 
-@Document(collection = "objects")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Object3D {
+public class Object3DDto {
 
-    @Id
     private String id;
 
     private String description;
@@ -34,8 +30,7 @@ public class Object3D {
     @NotNull(message = "Y coordinate is required")
     private Double y;
 
-    // ?�플�?참조 ?�드 (?�수)
+    // Template reference field (required)
     @NotNull(message = "Template name is required")
     private String templateName;
-
 }

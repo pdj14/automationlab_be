@@ -23,7 +23,7 @@ public class BoxDto {
     @NotNull(message = "Y coordinate is required")
     private Double y;
 
-    // 기본 ?�기 (1.0?�로 고정?�여 geometry 공유)
+    // Base size (fixed at 1.0 for geometry sharing)
     private static final Double BASE_SIZE = 1.0;
 
     @NotNull(message = "Width is required")
@@ -41,7 +41,7 @@ public class BoxDto {
     @NotBlank(message = "Color is required")
     private String color;
 
-    // ?�제 ?�기 계산 메서??(?�요???�용)
+    // Actual size calculation methods (for internal use)
     public Double getActualWidth() {
         return BASE_SIZE * width;
     }
@@ -54,4 +54,3 @@ public class BoxDto {
         return BASE_SIZE * depth;
     }
 }
-
