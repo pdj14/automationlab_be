@@ -134,6 +134,46 @@ public class Object3DTemplateService {
         return convertToDto(savedTemplate);
     }
 
+    public Object3DTemplateDto partialUpdateTemplateByName(String name, Object3DTemplateDto templateDto) {
+        Object3DTemplate existingTemplate = object3DTemplateRepository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("Template not found with name: " + name));
+        
+        // Check name duplication if name is being changed
+        if (templateDto.getName() != null && !existingTemplate.getName().equals(templateDto.getName()) && 
+            object3DTemplateRepository.existsByName(templateDto.getName())) {
+            throw new IllegalArgumentException("Template with name '" + templateDto.getName() + "' already exists");
+        }
+        
+        // Update only provided fields
+        if (templateDto.getName() != null) {
+            existingTemplate.setName(templateDto.getName());
+        }
+        if (templateDto.getCategory() != null) {
+            existingTemplate.setCategory(templateDto.getCategory());
+        }
+        if (templateDto.getDescription() != null) {
+            existingTemplate.setDescription(templateDto.getDescription());
+        }
+        if (templateDto.getWidth() != null) {
+            existingTemplate.setWidth(templateDto.getWidth());
+        }
+        if (templateDto.getDepth() != null) {
+            existingTemplate.setDepth(templateDto.getDepth());
+        }
+        if (templateDto.getHeight() != null) {
+            existingTemplate.setHeight(templateDto.getHeight());
+        }
+        if (templateDto.getColor() != null) {
+            existingTemplate.setColor(templateDto.getColor());
+        }
+        if (templateDto.getInstancingEnabled() != null) {
+            existingTemplate.setInstancingEnabled(templateDto.getInstancingEnabled());
+        }
+        
+        Object3DTemplate savedTemplate = object3DTemplateRepository.save(existingTemplate);
+        return convertToDto(savedTemplate);
+    }
+
     public void deleteTemplate(String id) {
         Object3DTemplate template = object3DTemplateRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));

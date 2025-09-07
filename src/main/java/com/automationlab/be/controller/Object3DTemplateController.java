@@ -121,6 +121,20 @@ public class Object3DTemplateController {
         }
     }
 
+    @PatchMapping("/name/{name}")
+    public ResponseEntity<Object3DTemplateDto> partialUpdateTemplateByName(
+            @PathVariable String name,
+            @RequestBody Object3DTemplateDto templateDto) {
+        try {
+            Object3DTemplateDto updatedTemplate = object3DTemplateService.partialUpdateTemplateByName(name, templateDto);
+            return ResponseEntity.ok(updatedTemplate);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTemplate(@PathVariable String id) {
         object3DTemplateService.deleteTemplate(id);
